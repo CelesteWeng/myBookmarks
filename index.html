@@ -1,51 +1,121 @@
 <!doctype html>
 <html lang="zh-Hans">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>我的导航</title>
+    <title>WENG 的导航</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
     <header></header>
     <main>
-        <div>
-            <kbd>q</kbd>
-            <kbd>q</kbd>
-            <kbd>q</kbd>
-            <kbd>q</kbd>
-            <kbd>q</kbd>
-            <kbd>q</kbd>
-            <kbd>q</kbd>
-            <kbd>q</kbd>
-        </div>
-        <div>
-            <kbd>q</kbd>
-            <kbd>q</kbd>
-            <kbd>q</kbd>
-            <kbd>q</kbd>
-            <kbd>q</kbd>
-            <kbd>q</kbd>
-            <kbd>q</kbd>
-            <kbd>q</kbd>
-        </div>
-        <div>
-            <kbd>q</kbd>
-            <kbd>q</kbd>
-            <kbd>q</kbd>
-            <kbd>q</kbd>
-            <kbd>q</kbd>
-            <kbd>q</kbd>
-            <kbd>q</kbd>
-            <kbd>q</kbd>
-        </div>
+        <div id="wrapper" class="wrapper"></div>
     </main>
     <footer></footer>
     <script>
-        var keys = {
-            0: ['q','w','e','r','t','y','u','i','o','p']
+        // 1. 初始化数据
+        var keys = init().keys
+        var hash = init().hash
+        
+        // 2. 生成键盘
+        generateKeys(keys, hash)
+
+        // 3. 监听用户动作
+        listenToUser(hash)
+
+        // 工具函数
+        function getFromlocalStorage(name) {
+            return JSON.parse(localStorage.getItem(name) || 'null')
         }
+        function tag(tagName) {
+            return document.createElement(tagName)
+        }
+        function createSpan(textContent) {
+            var span = tag('span')
+            span.textContent = textContent
+            span.className = 'text'
+            return span
+        }
+        function createButton(id) {
+            var button = tag('button')
+            button.textContent = '编辑'
+            button.id = id
+            button.onclick = function (event) {
+                var t = event.target
+                var img = t.previousSibling
+                var key = t.id
+                var inputText = prompt('输入更改的网址') // qq.com
+                hash[key] = inputText
+                img.src = 'http://' + inputText + '/favicon.ico'
+                img.onerror = function (event) {
+                    event.target.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png'
+                }
+                localStorage.setItem('keyHistory', JSON.stringify(hash))
+            }
+            return button
+        }
+        function createImg(domain) {
+            var img = tag('img')
+            if (domain) {
+                img.src = 'http://' + domain + '/favicon.ico'
+            } else {
+                img.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png'
+            }
+            img.onerror = function (event) {
+                event.target.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png'
+            }
+            return img
+        }
+
+        function init() {
+            var keys = [
+                ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+                ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k'],
+                ['z', 'x', 'c', 'v', 'b', 'n', 'm']
+            ]
+            var hashInLocalStorage = getFromlocalStorage('keyHistory')
+            var hash = hashInLocalStorage || { 'q': 'qq.com', 'w': 'weibo.com', 'e': 'ele.me', 'r': 'renren.com', 't': 'tianya.com', 'y': 'youtube.com', 'u': 'uc.com', 'i': 'iqiyi.com', 'o': 'opera.com', 'p': undefined, 'a': 'acfun.tv', 's': 'sohu.com', 'z': 'zhihu.com', 'm': 'www.mcdonalds.com.cn' }
+            return { keys, hash }
+        }
+
+        function generateKeys() {
+            var keyWrapper = document.getElementById('wrapper')
+            keys.map(function (t) {
+                var div = tag('div')
+                div.className = 'row'
+                keyWrapper.appendChild(div)
+                t.map(function (t2) {
+                    var keyInner = {
+                        span: createSpan(t2),
+                        button: createButton(t2),
+                        img: createImg(hash[t2])
+                    }
+                    var kbd = tag('kbd')
+                    kbd.className = 'key'
+
+                    kbd.appendChild(keyInner.span)
+                    kbd.appendChild(keyInner.button)
+                    kbd.appendChild(keyInner.img)
+
+                    div.appendChild(kbd)
+
+                })
+            })
+        }
+
+        function listenToUser(hash) {
+            document.onkeypress = function (event) {
+                var key = event.key
+                var website = hash[key]
+                window.open('http://' + website, '_blank')
+            }
+        }
+
     </script>
 </body>
+
 </html>
