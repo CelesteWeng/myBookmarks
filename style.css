@@ -1,31 +1,13 @@
-* { 
-  margin: 0; 
-  padding: 0; 
-}
-body {
-  background: url('./wall.png') no-repeat center center;
-  background-size: cover;
-}
-kbd {
-  display: inline-block;
-  width: 4em;
-  height: 4em;
-  border: 1px solid;
-}
-kbd > span.text {
-  text-transform: uppercase;
-}
-kbd > button {
-  display: none;
-}
-kbd:hover > button {
-  display: inline-block;
-  /* vertical-align: top; */
-}
-kbd > img {
-  width: 1em;
-  height: 1em;
-}
-main {
-  text-align: center;
-}
+* { margin: 0; padding: 0; }
+body {background: #01011d url('./wall.jpg') no-repeat center center; background-size: cover; }
+main { display: flex; align-items: center; justify-content: center; height: 100vh; }
+#wrapper { padding: 36px; border-radius: 20px; background: rgba(255, 255, 255, 0.3); }
+#wrapper > .row { margin: 20px; }
+#wrapper > .row:nth-child(2) { margin-left: 40px; }
+#wrapper > .row:nth-child(3) { margin-left: 80px; }
+kbd { position: relative; display: inline-block; margin: 0 10px; width: 50px; height: 40px; border: 1px solid #373737; color: #c5c5c5; font-size: 16px; font-family: helvetica; background: linear-gradient(to bottom, #272727 0%,#011111 100%); border-radius: 6px; box-shadow: 0 0 0 1px #1a1b1c, 0 0 0 2px #1f2020, 0 3px 0 2px #080808; }
+kbd > span.text { position: absolute; top: 2px; left: 4px; text-transform: uppercase; }
+kbd > button { position: absolute; right: 0; bottom: 0; display: none; }
+kbd:hover > button { display: inline-block; }
+kbd > img { position: absolute; left: 4px; bottom: 2px; width: 16px; height: 16px; }
+

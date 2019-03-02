@@ -13,14 +13,16 @@
 <body>
     <header></header>
     <main>
-        <div id="wrapper" class="wrapper"></div>
+        <div id="wrapper" class="wrapper">
+            
+        </div>
     </main>
     <footer></footer>
     <script>
         // 1. 初始化数据
         var keys = init().keys
         var hash = init().hash
-        
+
         // 2. 生成键盘
         generateKeys(keys, hash)
 
@@ -78,7 +80,7 @@
                 ['z', 'x', 'c', 'v', 'b', 'n', 'm']
             ]
             var hashInLocalStorage = getFromlocalStorage('keyHistory')
-            var hash = hashInLocalStorage || { 'q': 'qq.com', 'w': 'weibo.com', 'e': 'ele.me', 'r': 'renren.com', 't': 'tianya.com', 'y': 'youtube.com', 'u': 'uc.com', 'i': 'iqiyi.com', 'o': 'opera.com', 'p': undefined, 'a': 'acfun.tv', 's': 'sohu.com', 'z': 'zhihu.com', 'm': 'www.mcdonalds.com.cn' }
+            var hash = hashInLocalStorage || { 'q': 'qq.com', 'w': 'weibo.com', 'e': 'ele.me', 'r': 'renren.com', 't': 'tianya.cn', 'y': 'youtube.com', 'u': 'uc.cn', 'i': 'iqiyi.com', 'o': 'opera.com', 'p': undefined, 'a': 'acfun.cn', 's': 'sohu.com', 'g': 'github.com', 'z': 'zhihu.com', 'm': 'www.mcdonalds.com.cn' }
             return { keys, hash }
         }
 
